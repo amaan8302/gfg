@@ -13,39 +13,36 @@ using namespace std;
 
 class Solution {
   public:
-    /*  Function to implement Bellman Ford
-     *   edges: vector of vectors which represents the graph
-     *   S: source vertex to start traversing graph with
-     *   V: number of vertices
-     */
-    vector<int> bellmanFord(int V, vector<vector<int>>& edges, int src) 
+    vector<int> bellmanFord(int V, vector<vector<int>> &edges, int src)
+{
+    vector<int> distance(V, 1e8);
+    distance[src] = 0;
+
+    for (int i = 0; i < V - 1; i++)
     {
-        vector<int> distance(V, 1e8);
-        distance[src] = 0;
-        
-        for (int i = 0; i < V - 1; i++) {
-            for (int j = 0; j < edges.size(); j++) {
-                int u = edges[j][0];
-                int v = edges[j][1];
-                int w = edges[j][2];
-                if (distance[u] != 1e8 && distance[u] + w < distance[v]) {
-                    distance[v] = distance[u] + w;
-                }
-            }
-        }
-        
-        for (int j = 0; j < edges.size(); j++) {
+        for (int j = 0; j < edges.size(); j++)
+        {
             int u = edges[j][0];
             int v = edges[j][1];
             int w = edges[j][2];
-            if (distance[u] != 1e8 && distance[u] + w < distance[v]) {
-                return {-1}; // Negative cycle detected
-            }
+            if (distance[u] != 1e8 && distance[u] + w < distance[v])
+                distance[v] = distance[u] + w;
         }
-        
-        return distance;
+    }
+    // checking the negative cycle
+    for (int j = 0; j < edges.size(); j++)
+    {
+        int u = edges[j][0];
+        int v = edges[j][1];
+        int w = edges[j][2];
+        if (distance[u] != 1e8 && distance[u] + w < distance[v])
+        {
+            return {-1}; // Negative cycle detected
+        }
     }
 
+    return distance;
+}
 
 };
 
