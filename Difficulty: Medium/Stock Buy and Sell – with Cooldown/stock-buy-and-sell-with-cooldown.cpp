@@ -5,32 +5,34 @@ using namespace std;
 // } Driver Code Ends
 class Solution{
     public:
-    long long solve(int i , vector<long long>&prices , bool buy, int n
-    ,vector<vector<int>>&dp)
-    {
-        if(i>=n)
-            return 0;
-        if(dp[i][buy]!=-1)
-            return dp[i][buy];
-        long long profit;
-        if(buy)
-        {
-            long long buyKaro = -prices[i] + solve(i+1, prices,false,n,dp);
-            long long excl = solve(i+1,prices,true,n,dp);
-            profit = max(buyKaro , excl);
-        }    
-        else
-        {
-            long long sellKaro = prices[i] + solve(i+2, prices,true,n,dp);
-            long long excl = solve(i+1,prices,false,n,dp);
-            profit = max(sellKaro , excl);
-        }
-        return dp[i][buy] = profit;
-    }
     long long maximumProfit(vector<long long>&prices, int n) 
     {
-        vector<vector<int>>dp(n+1,vector<int>(2,-1));
-        return solve(0,prices,true,n,dp);
+        vector<int>prev(2,0);
+        vector<int>curr(2,0);
+        vector<int>next(2,0);
+        for(int i = n-1 ; i >=0 ; i--)
+        {
+            for(int buy = 0 ; buy <= 1 ; buy++)
+            {
+                long long profit;
+                if(buy)
+                {
+                    long long buyKaro = -prices[i] + curr[buy-1];
+                    long long excl = curr[buy];
+                    profit = max(buyKaro , excl);
+                }    
+                else
+                {
+                    long long sellKaro = prices[i] + next[buy+1];
+                    long long excl = curr[buy];
+                    profit = max(sellKaro , excl);
+                }
+                prev[buy] = profit;
+                next = curr;
+                curr=prev;
+            }
+        }
+        return curr[1];
     }
 };
 
