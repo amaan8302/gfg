@@ -6,19 +6,25 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int solve(int i, vector<int>& prices, int mini,vector<int>&dp) 
-    {
-        if (i == prices.size()) return 0;
-        if (dp[i] != -1) return dp[i];
-        int profit = max(solve(i + 1, prices, min(mini, prices[i]),dp), prices[i] - mini);
-        dp[i] = profit;
-        return dp[i];
-    }
+    // int solve(int i, vector<int>& prices, int mini,vector<int>&dp) 
+    // {
+    //     if (i == prices.size()) return 0;
+    //     if (dp[i] != -1) return dp[i];
+    //     int profit = max(solve(i + 1, prices, min(mini, prices[i]),dp), prices[i] - mini);
+    //     dp[i] = profit;
+    //     return dp[i];
+    // }
     int maximumProfit(vector<int> &prices) {
         // code here
-        int n = prices.size();
-        vector<int>dp(n+1,-1);
-        return solve(0, prices, prices[0],dp);
+        // int n = prices.size();
+        // vector<int>dp(n+1,-1);
+        // return solve(0, prices, prices[0],dp);
+        int minSoFar = prices[0], res = 0;
+        for (int i = 1; i < prices.size(); i++) {
+            minSoFar = min(minSoFar, prices[i]);
+            res = max(res, prices[i] - minSoFar);
+        }
+        return res;
     }
 };
 
