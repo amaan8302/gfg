@@ -5,19 +5,25 @@ using namespace std;
 
 
 // } Driver Code Ends
-
+// User function template for C++
 class Solution {
   public:
-    int getSecondLargest(vector<int> &arr) 
-    {
-        std::sort(arr.begin(),arr.end());
-        int n = arr[arr.size()-1];
-        for(int i = arr.size()-1 ; i > 0 ; i--)
+    int getSecondLargest(vector<int> &arr) {
+        // Code Here
+        int largest = INT_MIN, secondLargest = INT_MIN;
+
+        for (int i : arr) 
         {
-            if(arr[i]!=arr[i-1])
-                return arr[i-1];
+            if (i > largest) 
+            {
+                secondLargest = largest;
+                largest = i;
+            } else if (i > secondLargest && i < largest) {
+                secondLargest = i;
+            }
         }
-        return -1;
+    
+        return (secondLargest == INT_MIN) ? -1 : secondLargest;
     }
 };
 
