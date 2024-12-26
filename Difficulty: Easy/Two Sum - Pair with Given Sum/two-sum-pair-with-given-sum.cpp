@@ -8,19 +8,15 @@ using namespace std;
 class Solution {
   public:
     bool twoSum(vector<int>& arr, int target) {
-        std::sort(arr.begin(),arr.end());
-        int i = 0;
-        int j = arr.size()-1;
-        while(i<j)
-        {
-            if(arr[i]+arr[j]==target)
-                return true;
-            else if(arr[i]+arr[j]>target)
-                j--;
-            else
-                i++;
+        unordered_map<int, int> hashMap; // To store element and its index
+    for (int i = 0; i < arr.size(); i++) {
+        int complement = target - arr[i];
+        if (hashMap.find(complement) != hashMap.end() && hashMap[complement] != i) {
+            return true;
         }
-        return false;
+        hashMap[arr[i]] = i;
+    }
+    return false;
     }
 };
 
@@ -29,11 +25,11 @@ class Solution {
 int main() {
     int t;
     cin >> t;
-    cin.ignore(); // To discard any leftover newline characters
+    cin.ignore();
     while (t--) {
         int x;
         cin >> x;
-        cin.ignore(); // To discard any leftover newline characters
+        cin.ignore();
 
         vector<int> arr;
         string input;
