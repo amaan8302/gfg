@@ -6,23 +6,22 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    vector<int> subarraySum(vector<int> &arr, int s) {
-    int left = 0, curr_sum = 0;
-    for (int right = 0; right < arr.size(); right++) {
-        curr_sum += arr[right];
-        
-        while (curr_sum > s && left <= right) {
-            curr_sum -= arr[left];
-            left++;
+    vector<int> subarraySum(vector<int> &arr, int target) {
+        int i = 0, j = 0, sum = 0, n = arr.size();
+        while (j < n)
+        {
+            sum += arr[j];
+            while (sum > target && i <= j) 
+            {
+                sum -= arr[i];
+                i++;
+            }
+            if (sum == target)
+                return {i+1, j+1};
+            j++;
         }
-
-        if (curr_sum == s) {
-            return {left + 1, right + 1};
-        }
+        return {-1};
     }
-    return {-1}; 
-}
-
 };
 
 //{ Driver Code Starts.
@@ -30,13 +29,13 @@ class Solution {
 int main() {
     int t;
     cin >> t;
-    cin.ignore(); // Ignore the newline character after t
+    cin.ignore();
     while (t--) {
         vector<int> arr;
         int d;
         string input;
 
-        getline(cin, input); // Read the entire line for the array elements
+        getline(cin, input);
         stringstream ss(input);
         int number;
         while (ss >> number) {
@@ -44,14 +43,14 @@ int main() {
         }
 
         cin >> d;
-        cin.ignore(); // Ignore the newline character after d
+        cin.ignore();
 
         Solution ob;
         vector<int> result = ob.subarraySum(arr, d);
         for (int i : result) {
             cout << i << " ";
         }
-        cout << "\n";
+        cout << "\n~\n";
     }
     return 0;
 }
