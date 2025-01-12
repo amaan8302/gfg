@@ -7,30 +7,30 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
+    vector<int> getRightArray(vector<int>&arr, int n)
+    {
+        vector<int>left(n);
+        left[n-1]=arr[n-1];
+        for(int i = n-2 ; i >= 0 ; i--)
+            left[i]=max(left[i+1],arr[i]);
+        return left;
+    }
+    vector<int> getLeftArray(vector<int>&arr, int n)
+    {
+        vector<int>left(n);
+        left[0]=arr[0];
+        for(int i = 1 ; i < n ; i++)
+            left[i]=max(left[i-1],arr[i]);
+        return left;
+    }
     int maxWater(vector<int> &height) {
-        // code here
         int n = height.size();
-      int left = 0, right = n - 1;
-      int res = 0;
-      int maxLeft = 0, maxRight = 0;
-      while (left <= right) {
-        if (height[left] <= height[right]) {
-          if (height[left] >= maxLeft) {
-            maxLeft = height[left];
-          } else {
-            res += maxLeft - height[left];
-          }
-          left++;
-        } else {
-          if (height[right] >= maxRight) {
-            maxRight = height[right];
-          } else {
-            res += maxRight - height[right];
-          }
-          right--;
-        }
-      }
-      return res;
+        vector<int>left = getLeftArray(height,n);
+        vector<int>right = getRightArray(height,n);
+        int sum = 0;
+        for(int i = 0 ; i < n ; i++)
+            sum += min(left[i],right[i])-height[i];
+        return sum;
     }
 };
 
