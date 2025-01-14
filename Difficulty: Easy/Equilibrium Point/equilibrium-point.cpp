@@ -7,23 +7,21 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int equilibriumPoint(vector<int> &arr) {
+    // Function to find equilibrium point in the array.
+    int findEquilibrium(vector<int> &arr)
+    {
         int n = arr.size();
-        if(n==1)
-            return 1;
-        int sum = 0;
-        for(int i : arr)
-            sum+=i;
-        int x = arr[0];
-        int ans = -1;
-        for(int i = 1 ; i < arr.size() ; i++)
-        {
-            if(x == sum - x - arr[i])
-                ans = i+1;
-            x+=arr[i];
+        int sum = 0, x = 0;
+        for (int i : arr)
+            sum += i;
+        for (int i = 0; i < n; i++) {
+            if (x == sum - x - arr[i])
+                return i;
+            x += arr[i];
         }
-        return ans;
+        return -1;
     }
+
 };
 
 //{ Driver Code Starts.
@@ -44,7 +42,7 @@ int main() {
         }
 
         Solution ob;
-        cout << ob.equilibriumPoint(arr) << endl;
+        cout << ob.findEquilibrium(arr) << endl;
         cout << "~" << endl;
     }
 }
