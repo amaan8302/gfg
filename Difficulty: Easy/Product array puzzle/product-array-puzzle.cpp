@@ -2,40 +2,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Complete back-end function template for C++
-
 
 // } Driver Code Ends
 // User function template for C++
 
 class Solution {
-public:
-    vector<long long> productExceptSelf(vector<int>& arr) {
+  public:
+    vector<int> productExceptSelf(vector<int>& arr) 
+    {
         int n = arr.size();
-        vector<long long> res(n, 1);
-
-        long long prefix = 1, suffix = 1;
-        for (int i = 0; i < n; i++) {
-            res[i] *= prefix;
-            prefix *= arr[i];
+        vector<int> ans(n,1);
+        int left=1;
+        for(int i = 0 ; i < n ; i++)
+        {
+            ans[i]*=left;
+            left = left*arr[i];
         }
-        for (int i = n - 1; i >= 0; i--) {
-            res[i] *= suffix;
-            suffix *= arr[i];
+        int right=1;
+        for(int i = n-1 ; i>=0; i--)
+        {
+            ans[i]*=right;
+            right = right*arr[i];
         }
-        return res;
+        return ans;
     }
 };
-
 
 
 //{ Driver Code Starts.
 
 int main() {
 
-    int t; // Number of test cases
+    int t;
     cin >> t;
-    cin.ignore(); // To ignore newline character after t input
+    cin.ignore();
 
     while (t--) {
         vector<int> arr;
@@ -49,13 +49,13 @@ int main() {
         }
 
         Solution obj;
-        vector<long long> vec = obj.productExceptSelf(arr); // Function call
+        vector<int> res = obj.productExceptSelf(arr);
 
-        for (int i = 0; i < vec.size(); i++) { // Print the output
-            cout << vec[i] << " ";
+        for (int i = 0; i < res.size(); i++) {
+            cout << res[i] << " ";
         }
         cout << endl;
-        cout << "~" << endl;
+        cout << "~\n";
     }
 
     return 0;
