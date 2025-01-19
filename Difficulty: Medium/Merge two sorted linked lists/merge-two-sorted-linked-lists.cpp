@@ -39,7 +39,17 @@ Node *insertSorted(Node *head, int data) {
 
 
 // } Driver Code Ends
+/* Link list Node
+struct Node {
+  int data;
+  struct Node *next;
 
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+};
+*/
 class Solution {
   public:
     Node *findMid(Node *head)
