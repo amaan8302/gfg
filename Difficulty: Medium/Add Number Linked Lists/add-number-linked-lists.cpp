@@ -53,7 +53,6 @@ void printList(Node* n) {
 
 
 // } Driver Code Ends
-
 class Solution {
   public:
     void insertAtTail(Node* &head, Node* &tail, int val)
@@ -130,9 +129,16 @@ class Solution {
         
         Node* ans = add(l1,l2);
         ans = reverseList(ans);
+        while (ans != NULL && ans->data == 0 && ans->next != NULL) 
+        {
+            Node* temp = ans;
+            ans = ans->next;
+            delete temp;
+        }
         return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 
@@ -147,6 +153,7 @@ int main() {
         Solution ob;
         Node* res = ob.addTwoLists(num1, num2);
         printList(res);
+        cout << "~" << endl;
     }
     return 0;
 }
