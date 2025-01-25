@@ -32,29 +32,29 @@ void loopHere(Node *head, Node *tail, int position) {
 
 
 // } Driver Code Ends
-// User function Template for C++
+
 class Solution {
   public:
-    // Function to find first node if the linked list has a loop.
     Node* findFirstNode(Node* head) {
-    Node* slow = head;
-    Node* fast = head;
-    while (fast != NULL && fast->next != NULL) {
-        slow = slow->next;
-        fast = fast->next->next;
-
-        if (slow == fast) {
-            slow = head;
-            while (slow != fast) {
-                slow = slow->next;
-                fast = fast->next;
+        Node* slow = head;
+        Node* fast = head;
+        while (fast != NULL && fast->next != NULL)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast) 
+            {
+                slow = head;
+                while (slow != fast) 
+                {
+                    slow = slow->next;
+                    fast = fast->next;
+                }
+                return slow;
             }
-            return slow;
         }
+        return NULL;
     }
-    return NULL;
-}
-
 };
 
 //{ Driver Code Starts.
@@ -75,6 +75,7 @@ int main() {
         int k;
         cin >> k;
         cin.ignore();
+        assert(k <= arr.size());
         struct Node *head = new Node(arr[0]);
         struct Node *tail = head;
         for (int i = 1; i < arr.size(); ++i) {
