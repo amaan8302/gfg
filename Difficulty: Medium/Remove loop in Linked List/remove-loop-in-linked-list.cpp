@@ -64,57 +64,52 @@ bool notOriginal(Node* head, unordered_map<Node*, int>& myMap) {
 
 
 // } Driver Code Ends
-
 class Solution {
   public:
-    Node* Floyd(Node* head) {
-    if (head == NULL || head->next == NULL)
+    Node* floyd(Node* head)
+    {
+        if(head==NULL || head->next==NULL)
+            return head;
+        Node* slow = head;
+        Node* fast = head;
+        while(slow!=NULL && fast!=NULL)
+        {
+            fast = fast->next;
+            if(fast!=NULL)
+                fast=fast->next;
+            slow = slow->next;
+            if(fast==slow)
+                return slow;
+        }
         return NULL;
-
-    Node* slow = head;
-    Node* fast = head;
-
-    while (fast != NULL && fast->next != NULL) {
-        slow = slow->next;
-        fast = fast->next->next;
-
-        if (fast == slow) // Loop detected
-            return slow;
     }
-    return NULL;
-}
-
-Node* startingPoint(Node* head) {
-    if (head == NULL || head->next == NULL)
-        return NULL;
-
-    Node* intersection = Floyd(head);
-    if (intersection == NULL)
-        return NULL;
-
-    Node* slow = head;
-
-    while (slow != intersection) {
-        slow = slow->next;
-        intersection = intersection->next;
+    Node* start(Node* head)
+    {
+        if(head==NULL || head->next==NULL)
+            return head;
+        Node* inter = floyd(head);
+        if(!inter)
+            return NULL;
+        Node*slow = head;
+        while(slow!=inter)
+        {
+            slow = slow->next;
+            inter = inter ->next;
+        }
+        return slow;
     }
-    return slow; // Start of the loop
-}
-
-void removeLoop(Node* head) {
-    if (head == NULL)
-        return;
-
-    Node* start = startingPoint(head);
-    if (start == NULL)
-        return; // No loop detected
-
-    Node* temp = start;
-    while (temp->next != start) {
-        temp = temp->next;
+    void removeLoop(Node* head) {
+        // code here
+        if(head==NULL)
+            return;
+        Node* st = start(head);
+        Node* temp = st;
+        if(st==NULL)
+            return;
+        while(temp->next!=st)
+            temp = temp->next;
+        temp->next=NULL;
     }
-    temp->next = NULL; // Remove the loop
-}
 };
 
 //{ Driver Code Starts.
