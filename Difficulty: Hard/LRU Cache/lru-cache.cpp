@@ -7,43 +7,40 @@ using namespace std;
 // design the class in the most optimal way
 
 class LRUCache {
-private:
     int capacity;
     list<pair<int, int>> cache;
     unordered_map<int, list<pair<int, int>>::iterator> map;
-    
-public:
+  private:
+  public:
+    // Constructor for initializing the cache capacity with the given value.
     LRUCache(int cap) {
+        // code here
         capacity = cap;
+        
     }
-    
+
+    // Function to return value corresponding to the key.
     int get(int key) {
-        if (map.find(key) == map.end()) {
-            return -1;
-        }
-        
+        // your code here
+        if (map.find(key) == map.end()) return -1;
         auto it = map[key];
-        int value = it->second;
-        
-        cache.erase(it);
-        cache.push_front({key, value});
-        
-        map[key] = cache.begin();
-        
-        return value;
+        cache.splice(cache.begin(), cache, it);
+        return it->second;
     }
-    
-    void set(int key, int value) {
+
+    // Function for storing key-value pair.
+    void put(int key, int value) {
+        // your code here
         if (map.find(key) != map.end()) {
             auto it = map[key];
             cache.erase(it);
+            map.erase(key);
         }
-        else if (cache.size() >= capacity) {
-            int lru_key = cache.back().first;
-            map.erase(lru_key);
+        if (cache.size() == capacity) {
+            auto last = cache.back();
+            map.erase(last.first);
             cache.pop_back();
         }
-        
         cache.push_front({key, value});
         map[key] = cache.begin();
     }
@@ -65,12 +62,12 @@ int main() {
         while (queries--) {
             string q;
             cin >> q;
-            if (q == "SET") {
+            if (q == "PUT") {
                 int key;
                 cin >> key;
                 int value;
                 cin >> value;
-                cache->set(key, value);
+                cache->put(key, value);
             } else {
                 int key;
                 cin >> key;
@@ -78,9 +75,7 @@ int main() {
             }
         }
         cout << endl;
-
-        cout << "~"
-             << "\n";
+        cout << "~" << endl;
     }
     return 0;
 }
