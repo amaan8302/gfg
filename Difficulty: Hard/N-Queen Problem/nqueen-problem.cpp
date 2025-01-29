@@ -4,17 +4,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // } Driver Code Ends
 // User function Template for C++
 
-class Solution{
-public:
+class Solution {
+  public:
     void addSolution(vector<vector<int>>& ans, vector<vector<int>>& board, int n) {
     vector<int> temp;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if (board[i][j] == 1) {
-                temp.push_back(j + 1); // Store column position (1-based indexing)
+                temp.push_back(j + 1);
             }
         }
     }
@@ -59,7 +60,7 @@ vector<vector<int>> nQueen(int n) {
     vector<vector<int>> board(n, vector<int>(n, 0));
     vector<vector<int>> ans;
     solve(0, ans, board, n);
-    sort(ans.begin(), ans.end()); // Sort solutions lexicographically
+    sort(ans.begin(), ans.end());
     return ans;
 }
 
@@ -68,29 +69,31 @@ vector<vector<int>> nQueen(int n) {
 
 //{ Driver Code Starts.
 
-int main(){
+int main() {
     int t;
-    cin>>t;
-    while(t--){
+    cin >> t;
+    while (t--) {
         int n;
-        cin>>n;
-        
+        cin >> n;
+
         Solution ob;
         vector<vector<int>> ans = ob.nQueen(n);
-        if(ans.size() == 0)
-            cout<<-1<<"\n";
+        if (ans.size() == 0)
+            cout << -1 << "\n";
         else {
-            for(int i = 0;i < ans.size();i++){
-                cout<<"[";
-                for(int u: ans[i])
-                    cout<<u<<" ";
-                cout<<"] ";
+            sort(ans.begin(), ans.end());
+            for (int i = 0; i < ans.size(); i++) {
+                cout << "[";
+                for (int u : ans[i])
+                    cout << u << " ";
+                cout << "] ";
             }
-            cout<<endl;
+            cout << endl;
         }
-    
-cout << "~" << "\n";
-}
+
+        cout << "~"
+             << "\n";
+    }
     return 0;
 }
 // } Driver Code Ends
