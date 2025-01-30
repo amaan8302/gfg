@@ -1,115 +1,84 @@
 //{ Driver Code Starts
 #include <bits/stdc++.h>
 using namespace std;
-// UNASSIGNED is used for empty cells in sudoku grid 
-#define UNASSIGNED 0  
-
-// N is used for the size of Sudoku grid.  
-// Size will be NxN  
-#define N 9  
 
 
 // } Driver Code Ends
-class Solution 
-{
-    public:
-    bool isValid(int row, int col , int grid[N][N], int c)
+class Solution {
+  public:
+    bool isValid(int row, int col, vector<vector<int>>& grid, int c) 
     {
-        for(int i = 0 ; i < 9 ; i++)
-        {
-            if(grid[row][i]==c)
-                return false;
-            if(grid[i][col]==c)
-                return false;
-            if(grid[3*(row/3)+i/3][3*(col/3)+i%3]==c)
-                return false;
-        }
-        return true;
+    for (int i = 0; i < 9; i++) {
+        if (grid[row][i] == c || grid[i][col] == c || grid[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c)
+            return false;
     }
-    bool SolveSudoku(int grid[N][N])  
-    { 
-        for(int row = 0 ; row < N ; row++)
-        {
-            for(int col = 0 ; col < N ; col++)
-            {
-                if(grid[row][col]==0)
-                {
-                    for(int c = 1 ; c <= 9 ; c++)
-                    {
-                        if(isValid(row,col,grid,c))
-                        {
-                            grid[row][col]=c;
-                            if(SolveSudoku(grid))
-                                return true;
-                            else
-                                grid[row][col]=0;
-                        }
+    return true;
+}
+
+bool Sudoku(vector<vector<int>>& grid) {
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+            if (grid[row][col] == 0) {
+                for (int c = 1; c <= 9; c++) {
+                    if (isValid(row, col, grid, c)) {
+                        grid[row][col] = c;
+                        if (Sudoku(grid))
+                            return true;
+                        grid[row][col] = 0;
                     }
-                    return false;
                 }
+                return false;
             }
         }
-        return true;
     }
-    void printGrid (int grid[N][N]) 
-    {
-        SolveSudoku(grid);
-        for(int i = 0 ; i < N ; i++)
-        {
-            for(int j = 0 ; j < N ; j++)
-                cout<<grid[i][j]<<" ";
-        }
-    }
+    return true;
+}
+
+void solveSudoku(vector<vector<int>>& grid) 
+{
+    Sudoku(grid);
+}
+
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //{ Driver Code Starts.
 
-int main() {
-	int t;
-	cin>>t;
-	while(t--)
-	{
-		int grid[N][N];
-		
-		for(int i=0;i<9;i++)
-		    for(int j=0;j<9;j++)
-		        cin>>grid[i][j];
-		        
-		Solution ob;
-		
-		if (ob.SolveSudoku(grid) == true)  
-            ob.printGrid(grid);  
-        else
-            cout << "No solution exists";  
-        
-        cout<<endl;
-	
-cout << "~" << "\n";
+vector<int> inputLine() {
+    string str;
+    getline(cin, str);
+    stringstream ss(str);
+    int num;
+    vector<int> res;
+    while (ss >> num) {
+        res.push_back(num);
+    }
+    return res;
 }
-	
-	return 0;
+
+int main() {
+    int t;
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+        vector<vector<int>> grid;
+        for (int i = 0; i < 9; i++) {
+            vector<int> v = inputLine();
+            grid.push_back(v);
+        }
+
+        Solution ob;
+
+        ob.solveSudoku(grid);
+
+        for (auto v : grid) {
+            for (auto elem : v) {
+                cout << elem << " ";
+            }
+            cout << endl;
+        }
+
+        cout << "~" << endl;
+    }
+    return 0;
 }
 // } Driver Code Ends
