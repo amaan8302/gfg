@@ -1,4 +1,4 @@
-<h2><a href="https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1?page=2&sortBy=submissions">Tree Boundary Traversal</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 14pt;">Given a Binary Tree, find its Boundary Traversal. The traversal should be in the following order:&nbsp;</span></p>
+<h2><a href="https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1">Tree Boundary Traversal</a></h2><h3>Difficulty Level : Difficulty: Medium</h3><hr><div class="problems_problem_content__Xm_eO"><p><span style="font-size: 14pt;">Given a Binary Tree, find its Boundary Traversal. The traversal should be in the following order:&nbsp;</span></p>
 <ol>
 <li>
 <p data-pm-slice="1 1 []"><span style="font-size: 14pt;"><strong>Left Boundary:</strong> This includes all the nodes on the path from the root to the leftmost leaf node. You must prefer the left child over the right child when traversing. Do not include leaf nodes in this section.</span></p>
