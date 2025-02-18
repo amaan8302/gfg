@@ -7,13 +7,14 @@ using namespace std;
 class Solution {
   public:
     vector<int> kLargest(vector<int>& arr, int k) {
-        std::sort(arr.begin(),arr.end());
-        vector<int>ans;
-        int n = arr.size();
-        int i = 0;
-        while(i<k){
-            ans.push_back(arr[n-i-1]);
-            i++;
+        priority_queue<int>pq;
+        for(int i : arr)
+            pq.push(i);
+        vector<int>ans(k,0);
+        for(int i =0 ; i < k ; i++)
+        {
+            ans[i]=pq.top();
+            pq.pop();
         }
         return ans;
     }
