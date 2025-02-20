@@ -7,44 +7,43 @@ using namespace std;
 
 class Solution {
   public:
-    bool isParenthesisBalanced(string& s) 
-{
-    stack<char> res;
-    for (char ch : s)
+    bool isBalanced(string& s) 
     {
-        switch (ch)
+        stack<char> res;
+        for (char ch : s)
         {
-            case '(':
-            case '{':
-            case '[':
-                res.push(ch);
-                break;
-
-            case ')':
-                if (res.empty() || res.top() != '(')
+            switch (ch)
+            {
+                case '(':
+                case '{':
+                case '[':
+                    res.push(ch);
+                    break;
+    
+                case ')':
+                    if (res.empty() || res.top() != '(')
+                        return false;
+                    res.pop();
+                    break;
+    
+                case '}':
+                    if (res.empty() || res.top() != '{')
+                        return false;
+                    res.pop();
+                    break;
+    
+                case ']':
+                    if (res.empty() || res.top() != '[')
+                        return false;
+                    res.pop();
+                    break;
+    
+                default:
                     return false;
-                res.pop();
-                break;
-
-            case '}':
-                if (res.empty() || res.top() != '{')
-                    return false;
-                res.pop();
-                break;
-
-            case ']':
-                if (res.empty() || res.top() != '[')
-                    return false;
-                res.pop();
-                break;
-
-            default:
-                return false;
+            }
         }
+        return res.empty();
     }
-    return res.empty();
-}
-
 };
 
 //{ Driver Code Starts.
@@ -56,7 +55,7 @@ int main() {
     while (t--) {
         cin >> a;
         Solution obj;
-        if (obj.isParenthesisBalanced(a))
+        if (obj.isBalanced(a))
             cout << "true" << endl;
         else
             cout << "false" << endl;
