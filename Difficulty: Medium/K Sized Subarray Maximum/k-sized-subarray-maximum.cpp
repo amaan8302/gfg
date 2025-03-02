@@ -4,12 +4,11 @@ using namespace std;
 
 
 // } Driver Code Ends
-// User function template for C++
 
 class Solution {
   public:
-    vector<int> maxOfSubarrays(vector<int>& arr, int k) 
-    {
+    vector<int> maxOfSubarrays(vector<int>& arr, int k) {
+        // code here
         int n = arr.size();
         deque<int> deq;
         vector<int>res;
@@ -26,6 +25,7 @@ class Solution {
         return res;
     }
 };
+
 
 //{ Driver Code Starts.
 
