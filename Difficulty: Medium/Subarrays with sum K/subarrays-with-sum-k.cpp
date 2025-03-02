@@ -5,6 +5,7 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
     int countSubarrays(vector<int> &arr, int k) {
@@ -22,6 +23,8 @@ class Solution {
         return res;
     }
 };
+
+
 
 //{ Driver Code Starts.
 
