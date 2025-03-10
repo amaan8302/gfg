@@ -5,11 +5,10 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
-    // Function to compute the edit distance between two strings
     int editDistance(string& a, string& b) {
-        // code here
         if(a.length()==0)
             return b.length();
         if(b.length()==0)
@@ -22,17 +21,14 @@ class Solution {
         {
             for(int j = b.length()-1 ; j>=0 ; j--)
             {
-                curr[b.length()]=a.length()-i;  //second base case ki handling
+                curr[b.length()]=a.length()-i;
                 if(a[i]==b[j])
                     curr[j] = next[j+1];
                 else
                 {
                     int insertion,deletion,replace;
-                    //insert
                     insertion = 1 + curr[j+1];
-                    //deletion
                     deletion = 1 + next[j];
-                    //replacement
                     replace = 1 + next[j+1];
                     curr[j] = min(insertion,min(deletion, replace));
                 }
@@ -42,6 +38,7 @@ class Solution {
         return next[0];
     }
 };
+
 
 //{ Driver Code Starts.
 
