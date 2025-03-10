@@ -4,26 +4,25 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
-    // Function to count number of ways to reach the nth stair.
-    int solve(int n,vector<int>&dp)
+    int solve(int i , int n , vector<int>&dp)
     {
-        if (n <= 0) return 0;
-        if (n == 1) return 1;
-        if (n == 2) return 2;
-        
-        if (dp[n] != -1) return dp[n];
-        int one = solve(n-1, dp);
-        int two = solve(n-2, dp);
-        return dp[n] = one + two;
+        if(i==n)
+            return 1;
+        if(i>n)
+            return 0;
+        if(dp[i]!=-1)
+            return dp[i];
+        return dp[i] = solve(i+1,n,dp)+solve(i+2,n,dp);
     }
     int countWays(int n) {
-        // your code here
         vector<int>dp(n+1,-1);
-        return solve(n,dp);
+        return solve(0,n,dp);
     }
 };
+
 
 
 //{ Driver Code Starts.
