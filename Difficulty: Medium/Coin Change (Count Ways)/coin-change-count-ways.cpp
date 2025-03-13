@@ -4,29 +4,30 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
-    long long int solve(int i, int amount,vector<int>& coins,int n,vector<vector<long long int>>&dp)
+    int solve(vector<int>& coins, int amount , int i,vector<vector<int>>&dp)
     {
-        if(amount==0)
+        if(amount == 0)
             return 1;
-        if(i>=n)
+        if(i >= coins.size() || amount<0 )
             return 0;
-        if(coins[i]>amount)
-            return solve(i+1,amount,coins,n,dp);
         if(dp[i][amount]!=-1)
             return dp[i][amount];
-        long long int take = solve(i,amount - coins[i] , coins,n,dp);
-        long long int skip = solve(i+1 , amount , coins,n,dp);
+        int take = 0;
+        if(amount - coins[i] >= 0)
+            take = solve(coins,amount-coins[i],i,dp);
+        int skip = solve(coins, amount , i+1,dp);
         return dp[i][amount] = take + skip;
     }
-    long long int count(vector<int> coins, int amount) {
-        // code here.
+    int count(vector<int>& coins, int sum) {
         int n = coins.size();
-        vector<vector<long long int>>dp(n+1,vector<long long int>(amount+1,-1));
-        return solve(0,amount,coins,n,dp);
+        vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
+        return solve(coins,sum,0,dp);
     }
 };
+
 
 //{ Driver Code Starts.
 
