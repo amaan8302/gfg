@@ -21,10 +21,26 @@ class Solution {
         int skip = solve(coins, amount , i+1,dp);
         return dp[i][amount] = take + skip;
     }
-    int count(vector<int>& coins, int sum) {
+    int count(vector<int>& coins, int sum) 
+    {
         int n = coins.size();
         vector<vector<int>>dp(n+1,vector<int>(sum+1,-1));
         return solve(coins,sum,0,dp);
+        // vector<vector<int>>dp(n+1,vector<int>(sum+1,0));
+        // for(int i = 0 ; i <= n ; i++)
+        //     dp[i][0]=1;
+        // for(int i = n-1 ; i >=0 ; i--)
+        // {
+        //     for(int amount = 0 ; amount <= sum ; amount++)
+        //     {
+        //         int take = 0;
+        //         if(amount - coins[i] >= 0)
+        //             take = dp[i][amount-coins[i]];
+        //         int skip = dp[i+1][amount];
+        //         dp[i][amount] = take+skip;
+        //     }
+        // }
+        // return dp[0][sum];
     }
 };
 
