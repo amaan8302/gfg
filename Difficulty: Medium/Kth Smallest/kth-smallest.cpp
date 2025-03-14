@@ -6,21 +6,18 @@ using namespace std;
 
 
 // } Driver Code Ends
-// User function template for C++
 
 class Solution {
   public:
     int kthSmallest(vector<int> &arr, int k) {
-        std::sort(arr.begin(),arr.end());
-        int n = arr.size();
-        int x = arr[n-1];
-        // for(int i = n - 1 ; i >= 1 ; i--)
-        // {
-        //     if()
-        // }
-        return arr[k-1];
+        priority_queue<int,vector<int>,greater<int>>pq(arr.begin(),arr.end());
+        int x = k-1;
+        while(x--)
+            pq.pop();
+        return pq.top();
     }
 };
+
 
 //{ Driver Code Starts.
 
