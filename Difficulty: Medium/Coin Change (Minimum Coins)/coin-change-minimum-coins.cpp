@@ -4,49 +4,15 @@ using namespace std;
 
 
 // } Driver Code Ends
-class Solution {
 
+class Solution {
   public:
-    int solve1(vector<int> &num, int x)
+    int solveTab(vector<int> &num, int x)
     {
-        if(x==0)
-            return 0;
-        if(x<0)
-            return INT_MAX;
-        int mini = INT_MAX;
-        for(int i = 0 ; i < num.size() ; i++)
-        {
-            int ans = solve1(num , x-num[i]);
-            if(ans!=INT_MAX)
-                mini = min(1+ans,mini);
-        }
-        return mini;
-    }
-    int solve(vector<int> &num, int x ,vector<int>&dp)
-    {
-        if(x==0)
-            return 0;
-        if(x<0)
-            return INT_MAX;
-        if(dp[x]!=-1)
-            return dp[x];
-        int mini = INT_MAX;
-        for(int i = 0 ; i < num.size() ; i++)
-        {
-            int ans = solve1(num , x-num[i]);
-            if(ans!=INT_MAX)
-                mini = min(1+ans,mini);
-        }
-        dp[x]=mini;
-        return mini;
-    }
-    int minCoins(vector<int> &num, int x) {
         vector<int>dp(x+1,INT_MAX);
         dp[0]=0;
-        //dp[i] min number of points required to make target 'i'
         for(int i = 1 ; i <= x ; i++)
         {
-            //trying to solve for every figure from 1 to x
             for(int j = 0 ; j < num.size();j++)
             {
                 if(i-num[j]>=0 && dp[i-num[j]]!=INT_MAX)
@@ -57,7 +23,11 @@ class Solution {
             return -1;
         return dp[x];
     }
+    int minCoins(vector<int> &coins, int sum) {
+        return solveTab(coins,sum);
+    }
 };
+
 
 //{ Driver Code Starts.
 
