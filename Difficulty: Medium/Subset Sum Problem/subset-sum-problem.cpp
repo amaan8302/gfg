@@ -6,27 +6,46 @@ using namespace std;
 
 // } Driver Code Ends
 
-class Solution 
-{
+class Solution {
   public:
-    bool solve(vector<int>& arr, int target,int idx,vector<vector<int>>&dp)
+    // bool isSubsetSum(vector<int>& arr, int s)
+    // {
+    //     int n = arr.size();
+    //     vector<vector<bool>>dp(arr.size()+1,vector<bool>(s+1,0));
+    //     for(int i = 0 ; i <= arr.size() ; i++)
+    //         dp[i][0]=true;
+    //     for(int i = n-1 ; i >= 0 ; i--)
+    //     {
+    //         for(int sum = 0 ; sum <=s ; sum++)
+    //         {
+    //             bool take=false;
+    //             if(sum>=arr[i])
+    //                 take = dp[i+1][sum - arr[i]];
+    //             bool notake = dp[i+1][sum];
+    //             dp[i][sum] = take || notake;
+    //         }
+    //     }
+    //     return dp[0][s];
+    // }
+    bool isSubsetSum(vector<int>& arr, int s)
     {
-        if(target == 0) 
-            return 1;
-        if(idx == arr.size()) 
-            return 0;
-        if(dp[idx][target] != -1)
-            return dp[idx][target];
-        bool result = false;
-        if(target >= arr[idx])
-            result = solve(arr, target - arr[idx], idx + 1, dp);
-        if(!result)
-            result = solve(arr, target, idx + 1, dp);
-        return dp[idx][target] = result;
-    }
-    bool isSubsetSum(vector<int>& arr, int target) {
-        vector<vector<int>>dp(arr.size()+1,vector<int>(target+1,-1));
-        return solve(arr,target,0,dp);
+        int n = arr.size();
+        vector<bool>curr(s+1,false);
+        vector<bool>next(s+1,false);
+        next[0]=true;
+        for(int i = n-1 ; i >= 0 ; i--)
+        {
+            for(int sum = 0 ; sum <=s ; sum++)
+            {
+                bool take=false;
+                if(sum>=arr[i])
+                    take = next[sum - arr[i]];
+                bool notake = next[sum];
+                curr[sum] = take || notake;
+            }
+            next = curr;
+        }
+        return curr[s];
     }
 };
 
