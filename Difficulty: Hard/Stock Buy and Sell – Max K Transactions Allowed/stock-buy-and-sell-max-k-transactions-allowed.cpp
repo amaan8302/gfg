@@ -1,56 +1,70 @@
 //{ Driver Code Starts
-// Initial template for C++
-
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // } Driver Code Ends
+
 class Solution {
   public:
-    int solve(int price[] , bool buy , int i, int n,int k
-        ,vector<vector<vector<int>>>&dp)
+    int solve(vector<int>& prices, int k , bool buy , int i,vector<vector<vector<int>>>&dp)
     {
-        if(i>=n)
+        if(i>=prices.size())
             return 0;
-        if(k==0)
+        if(k<=0)
             return 0;
-        if(dp[i][buy][k]!=-1)
-            return dp[i][buy][k];
+        if(dp[i][k][buy]!=-1)
+            return dp[i][k][buy];
         int profit;
-        if(buy){
-            int buyKaro = -price[i] + solve(price,0,i+1,n,k,dp);
-            int excl = solve(price,1,i+1,n,k,dp);
-            profit = max(buyKaro,excl);
+        if(buy)
+        {
+            int buy = solve(prices , k , 0 , i+1,dp)-prices[i];
+            int excl = solve(prices,k,1,i+1,dp);
+            profit = max(buy,excl);
         }
-        else{
-            int sellKaro = price[i] + solve(price,1,i+1,n,k-1,dp);
-            int excl = solve(price,0,i+1,n,k,dp);
-            profit = max(sellKaro,excl);
+        else
+        {
+            int sell = solve(prices,k-1,1,i+1,dp)+prices[i];
+            int excl = solve(prices,k,0,i+1,dp);
+            profit = max(sell,excl);
         }
-        return dp[i][buy][k] = profit;
+        return dp[i][k][buy] = profit;
     }
-    int maxProfit(int k, int n, int A[]){
-        vector<vector<vector<int>>>dp(n+1, vector<vector<int>>(2,vector<int>(k+1,-1)));
-        return solve(A , true , 0 , n , k ,dp);
+    int maxProfit(vector<int>& prices, int k) {
+        vector<vector<vector<int>>>dp(prices.size(),vector<vector<int>>(k+1,vector<int>(3,-1)));
+        return solve(prices,k,1,0,dp);
     }
+    
 };
 
+
 //{ Driver Code Starts.
+
 int main() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(0);
+
     int t;
     cin >> t;
+    cin.ignore();
     while (t--) {
-        int N, K;
-        cin >> K;
-        cin >> N;
-        int A[N];
-        for (int i = 0; i < N; i++) cin >> A[i];
+        string input;
+        getline(cin, input);
+        istringstream iss(input);
+        vector<int> arr;
+        int num;
 
+        // Read integers from the input string
+        while (iss >> num) {
+            arr.push_back(num);
+        }
+        int k;
+        cin >> k;
+        cin.ignore();
         Solution ob;
-        cout << ob.maxProfit(K, N, A) << endl;
-    
-cout << "~" << "\n";
-}
+        cout << ob.maxProfit(arr, k) << endl;
+        cout << "~" << endl;
+    }
     return 0;
 }
 // } Driver Code Ends
