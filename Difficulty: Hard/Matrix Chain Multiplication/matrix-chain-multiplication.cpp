@@ -4,7 +4,6 @@ using namespace std;
 
 
 // } Driver Code Ends
-// User function Template for C++
 
 class Solution {
   public:
@@ -28,7 +27,12 @@ class Solution {
         vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
         return solve(arr, 1, n-1,dp);
     }
+    // int matrixMultiplication(vector<int> &arr) {
+    //     // code here
+        
+    // }
 };
+
 
 //{ Driver Code Starts.
 
