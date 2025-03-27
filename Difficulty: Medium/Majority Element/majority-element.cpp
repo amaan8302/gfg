@@ -6,38 +6,24 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 // User function template for C++
 
 class Solution {
   public:
-    int majorityElement(vector<int>& nums) {
-
-        int cnt=0;
-        int ele;
-        for(int i = 0;i<nums.size();i++)
+    int majorityElement(vector<int>& arr) {
+        unordered_map<int,int>mp;
+        int ans = -1;
+        for(int i : arr)
         {
-            if(cnt==0)
-            {
-                cnt=1;
-                ele=nums[i];
-            }
-            else if(nums[i]==ele)
-                cnt++;
-            else
-                cnt--;
+            mp[i]++;
+            if(mp[i]>arr.size()/2)
+                ans = i;
         }
-        int cnt1=0;
-        for(int i=0;i<nums.size();i++)
-        {
-            if(nums[i]==ele)
-                cnt1++;
-        }
-        if(cnt1>(nums.size()/2))
-            return ele;
-        return -1;
-        // your code here
+        return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 
@@ -58,6 +44,7 @@ int main() {
 
         Solution obj;
         cout << obj.majorityElement(a) << endl;
+        cout << "~" << endl;
     }
 
     return 0;
