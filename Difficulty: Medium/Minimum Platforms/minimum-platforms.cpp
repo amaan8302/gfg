@@ -8,29 +8,26 @@ class Solution {
   public:
     int findPlatform(vector<int>& arr, vector<int>& dep) 
     {
-        int n = arr.size();
-        std::sort(arr.begin(), arr.end());
-        std::sort(dep.begin(), dep.end());
-    
-        int i = 0, j = 0, cnt = 0, maxCnt = 0;
-    
-        while (i < n)
+        std::sort(arr.begin(),arr.end());
+        std::sort(dep.begin(),dep.end());
+        int i = 0, j = 0,cnt = 0 , maxi = INT_MIN;
+        while(i<arr.size() && j<arr.size())
         {
-            if (arr[i] <= dep[j]) 
-            { 
+            if(arr[i]<=dep[j])
+            {
                 cnt++;
                 i++;
-            } 
-            else 
+            }
+            else
             {
                 cnt--;
                 j++;
             }
-            maxCnt = std::max(maxCnt, cnt);
+            maxi = max(maxi,cnt);
         }
-        return maxCnt;
+        maxi = max(maxi,cnt);
+        return maxi;
     }
-
 };
 
 
