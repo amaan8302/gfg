@@ -1,6 +1,5 @@
 //{ Driver Code Starts
-// Program to find the maximum profit job sequence from a given array
-// of jobs with deadlines and profits
+// Driver code
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -9,77 +8,80 @@ using namespace std;
 
 class Solution {
   public:
-    vector<int> JobSequencing(vector<int> &id, vector<int> &deadline,
-                              vector<int> &profit) {
-    int n = id.size();
+    class DSU {
+        vector<int> parent;
+    public:
+        DSU(int n) {
+            parent.resize(n + 1);
+            for (int i = 0; i <= n; i++)
+                parent[i] = i;
+        }
     
-    vector<vector<int>> jobs(n);
-    for(int i = 0; i < n; i++) {
-        jobs[i] = {profit[i], deadline[i], id[i]};
-    }
+        int find(int x) {
+            if (parent[x] == x) return x;
+            return parent[x] = find(parent[x]); // Path compression
+        }
     
-    sort(jobs.begin(), jobs.end(), greater<vector<int>>());
+        void merge(int u, int v) {
+            parent[find(u)] = find(v);
+        }
+    };
+
+    vector<int> jobSequencing(vector<int> &deadline, vector<int> &profit) {
+        int n = deadline.size();
+        vector<vector<int>> jobs(n);
+        
+        for(int i = 0; i < n; i++) {
+            jobs[i] = {profit[i], deadline[i]};
+        }
     
-    int maxDeadline = 0;
-    for(int i = 0; i < n; i++) {
-        maxDeadline = max(maxDeadline, deadline[i]);
-    }
+        sort(jobs.rbegin(), jobs.rend()); // Sort by profit in descending order
     
-    vector<bool> timeSlot(maxDeadline + 1, false);
+        int maxDeadline = *max_element(deadline.begin(), deadline.end());
+        DSU dsu(maxDeadline);
     
-    int jobCount = 0;
-    int totalProfit = 0;
-    
-    for(int i = 0; i < n; i++) {
-        for(int j = jobs[i][1]; j > 0; j--) {
-            if(!timeSlot[j]) {
-                timeSlot[j] = true;
+        int jobCount = 0, totalProfit = 0;
+        
+        for(auto &job : jobs) {
+            int d = job[1], p = job[0];
+            int availableSlot = dsu.find(d);
+            
+            if (availableSlot > 0) {
+                dsu.merge(availableSlot, availableSlot - 1);
                 jobCount++;
-                totalProfit += jobs[i][0];
-                break;
+                totalProfit += p;
             }
         }
-    }
-    
-    return {jobCount, totalProfit};
+        
+        return {jobCount, totalProfit};
     }
 };
 
 
 //{ Driver Code Starts.
-//            Driver program to test methods
+
 int main() {
     int t;
-    // testcases
     cin >> t;
     cin.ignore();
     while (t--) {
-        vector<int> jobIDs, deadlines, profits;
+        vector<int> deadlines, profits;
         string temp;
         getline(cin, temp);
-        istringstream ss1(temp);
         int x;
+        istringstream ss1(temp);
         while (ss1 >> x)
-            jobIDs.push_back(x);
+            deadlines.push_back(x);
 
         getline(cin, temp);
         istringstream ss2(temp);
         while (ss2 >> x)
-            deadlines.push_back(x);
-
-        getline(cin, temp);
-        istringstream ss3(temp);
-        while (ss3 >> x)
             profits.push_back(x);
 
-        int n = jobIDs.size();
-
         Solution obj;
-        vector<int> ans = obj.JobSequencing(jobIDs, deadlines, profits);
+        vector<int> ans = obj.jobSequencing(deadlines, profits);
         cout << ans[0] << " " << ans[1] << endl;
-
-        cout << "~"
-             << "\n";
+        cout << "~" << endl;
     }
     return 0;
 }
