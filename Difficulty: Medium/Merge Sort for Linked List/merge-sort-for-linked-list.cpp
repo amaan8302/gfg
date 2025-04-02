@@ -23,74 +23,47 @@ void printList(Node *node) {
 
 
 // } Driver Code Ends
-
-
-
 class Solution {
   public:
-    Node *findMid(Node *head)
+    Node* mergeSortedLL(Node* head1, Node* head2) 
     {
-        if (head == NULL || head->next == NULL)
+        if (!head1) return head2;
+        if (!head2) return head1;
+    
+        Node* result = nullptr;
+        if (head1->data < head2->data) {
+            result = head1;
+            result->next = mergeSortedLL(head1->next, head2);
+        } else {
+            result = head2;
+            result->next = mergeSortedLL(head1, head2->next);
+        }
+        return result;
+    }
+    
+    Node* midPoint(Node* head) {
+        if (!head || !head->next)
             return head;
-    
-        Node *slow = head;
-        Node *fast = head->next;
-    
-        while (fast != NULL && fast->next != NULL)
-        {
+        Node* slow = head;
+        Node* fast = head->next;
+        while (fast && fast->next) {
             slow = slow->next;
             fast = fast->next->next;
         }
         return slow;
     }
-    Node *merge(Node *left, Node *right)
-    {
-        if (left == NULL)
-            return right;
-        if (right == NULL)
-            return left;
-        Node *ans = new Node(0);
-        Node *temp = ans;
-        while (left != NULL && right != NULL)
-        {
-            if (left->data < right->data)
-            {
-                temp->next = left;
-                temp = left;
-                left = left->next;
-            }
-            else
-            {
-                temp->next = right;
-                temp = right;
-                right = right->next;
-            }
-        }
-        while (left != NULL)
-        {
-            temp->next = left;
-            temp = left;
-            left = left->next;
-        }
-        while (right != NULL)
-        {
-            temp->next = right;
-            temp = right;
-            right = right->next;
-        }
-        ans = ans->next;
-        return ans;
-    }
     Node* mergeSort(Node* head) {
-        if (head == NULL || head->next == NULL)
+        if (!head || !head->next)
             return head;
-        Node *mid = findMid(head);
-        Node *left = head;
-        Node *right = mid->next;
-        mid->next = NULL;
-        left = mergeSort(left);
+    
+        Node* mid = midPoint(head);
+        Node* right = mid->next;
+        mid->next = nullptr;
+    
+        Node* left = mergeSort(head);
         right = mergeSort(right);
-        return merge(left, right);
+    
+        return mergeSortedLL(left, right);
     }
 };
 
