@@ -7,33 +7,37 @@ using namespace std;
 
 class Solution {
   public:
-    bool dfs(int node, int parent, vector<int> adj[], vector<bool> &visited)
-    {
-        visited[node] = true;
-        for (int neighbor : adj[node]) {
-            if (!visited[neighbor]) {
-                if (dfs(neighbor, node, adj, visited)) return true;
-            } 
-            else if (neighbor != parent) {
-                return true; // Cycle detected
-            }
-        }
-        return false;
+    bool dfs(int node, unordered_map<int, bool>& visited, unordered_map<int, list<int>>& adj, int parent) {
+    visited[node] = true;
+    for (auto &i : adj[node]) {
+        if (i == parent)
+            continue;
+        if (visited[i])
+            return true;
+        if (dfs(i, visited, adj, node))
+            return true;
     }
-    bool isCycle(int V, vector<vector<int>>& edges){
-        vector<int> adj[V];
-        for (auto &edge : edges) {
-            adj[edge[0]].push_back(edge[1]);
-            adj[edge[1]].push_back(edge[0]);
-        }
-        vector<bool> visited(V, false);
-        for (int i = 0; i < V; i++) {
-            if (!visited[i]) {
-                if (dfs(i, -1, adj, visited)) return true;
-            }
-        }
-        return false;
+    return false;
+}
+
+bool isCycle(int V, vector<vector<int>>& edges) {
+    unordered_map<int, list<int>> adj;
+    for (int i = 0; i < edges.size(); i++) {
+        int u = edges[i][0];
+        int v = edges[i][1];
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
+    unordered_map<int, bool> visited;
+    for (int i = 0; i < edges.size(); i++) {
+        for (int j = 0; j < edges[i].size(); j++) {
+            if (!visited[edges[i][j]] && dfs(edges[i][j], visited, adj, -1))
+                return true;
+        }
+    }
+    return false;
+}
+
 };
 
 
