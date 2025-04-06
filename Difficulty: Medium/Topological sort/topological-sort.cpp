@@ -4,48 +4,47 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
-    void dfs(int node, vector<vector<int>>& adj, vector<bool>& visited, stack<int>& s) 
+    void dfs(int node, unordered_map<int , list<int>>&adj , vector<bool>&visited, stack<int>&s)
     {
-        visited[node] = true;
-        for (auto i : adj[node]) {
-            if (!visited[i]) {
-                dfs(i, adj, visited, s);
-            }
+        visited[node]=1;
+        for(auto &i : adj[node])
+        {
+            if(!visited[i])
+                dfs(i,adj,visited,s);
         }
         s.push(node);
     }
-
-    vector<int> topologicalSort(vector<vector<int>>& adj)
-    {
-        vector<bool> visited(adj.size(), false);
-        vector<int> ans;
-        stack<int> s;
-    
-        for (int i = 0; i < adj.size(); i++) {
-            if (!visited[i]) {
-                dfs(i, adj, visited, s);
-            }
+    vector<int> topoSort(int V, vector<vector<int>>& edges) {
+        unordered_map<int , list<int>>adj;
+        for(int i = 0 ; i < edges.size() ; i++)
+        {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            adj[u].push_back(v);
         }
-    
-        while (!s.empty()) {
+        vector<bool>visited(V,0);
+        vector<int> ans;
+        stack<int>s;
+        for(int i = 0 ; i < V ; i++)
+        {
+            if(!visited[i])
+                dfs(i,adj,visited,s);
+        }
+        while(!s.empty())
+        {
             ans.push_back(s.top());
             s.pop();
         }
         return ans;
     }
-    
 };
+
 
 //{ Driver Code Starts.
 
-/*  Function to check if elements returned by user
- *   contains the elements in topological sorted form
- *   V: number of vertices
- *   *res: array containing elements in topological sorted form
- *   adj[]: graph input
- */
 int check(int V, vector<int> &res, vector<vector<int>> adj) {
 
     if (V != res.size())
@@ -68,23 +67,26 @@ int main() {
     int T;
     cin >> T;
     while (T--) {
-        int N, E;
-        cin >> E >> N;
-        int u, v;
+        int V, E;
+        cin >> V >> E;
 
-        vector<vector<int>> adj(N);
+        vector<vector<int>> adj(V);
+        vector<vector<int>> edges;
 
         for (int i = 0; i < E; i++) {
             int u, v;
             cin >> u >> v;
             adj[u].push_back(v);
+            edges.push_back({u, v});
         }
 
         Solution obj;
-        vector<int> res = obj.topologicalSort(adj);
-
-        cout << check(N, res, adj) << endl;
-
+        vector<int> res = obj.topoSort(V, edges);
+        bool ans = check(V, res, adj);
+        if (ans)
+            cout << "true\n";
+        else
+            cout << "false\n";
         cout << "~"
              << "\n";
     }
