@@ -76,18 +76,18 @@ Node* buildTree(string str) {
 
 
 // } Driver Code Ends
-// User function Template for C++
-// Class Solution
+
 class Solution {
   public:
     int countLeaves(Node* root) {
-        if(root==NULL)
-            return 0;   
-        if(root->left==NULL && root->right==NULL)
+        if(!root)
+            return 0;
+        if(!root->left && !root->right)
             return 1;
         return countLeaves(root->left)+countLeaves(root->right);
     }
 };
+
 
 //{ Driver Code Starts.
 int main() {
