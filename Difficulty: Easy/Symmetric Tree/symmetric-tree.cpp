@@ -1,43 +1,38 @@
 //{ Driver Code Starts
-//Initial Template for C++
-
+// Initial Template for C++
 
 #include <bits/stdc++.h>
 using namespace std;
 #define MAX_HEIGHT 100000
 
 // Tree Node
-struct Node {
+class Node {
+  public:
     int data;
-    Node* left;
-    Node* right;
+    Node *left, *right;
+
+    Node(int val) {
+        data = val;
+        left = right = nullptr;
+    }
 };
-
-// Utility function to create a new Tree Node
-Node* newNode(int val) {
-    Node* temp = new Node;
-    temp->data = val;
-    temp->left = NULL;
-    temp->right = NULL;
-
-    return temp;
-}
-
 
 // Function to Build Tree
 Node* buildTree(string str) {
     // Corner Case
-    if (str.length() == 0 || str[0] == 'N') return NULL;
+    if (str.length() == 0 || str[0] == 'N')
+        return NULL;
 
     // Creating vector of strings from input
     // string after spliting by space
     vector<string> ip;
 
     istringstream iss(str);
-    for (string str; iss >> str;) ip.push_back(str);
+    for (string str; iss >> str;)
+        ip.push_back(str);
 
     // Create the root of the tree
-    Node* root = newNode(stoi(ip[0]));
+    Node* root = new Node(stoi(ip[0]));
 
     // Push the root to the queue
     queue<Node*> queue;
@@ -58,7 +53,7 @@ Node* buildTree(string str) {
         if (currVal != "N") {
 
             // Create the left child for the current node
-            currNode->left = newNode(stoi(currVal));
+            currNode->left = new Node(stoi(currVal));
 
             // Push it to the queue
             queue.push(currNode->left);
@@ -66,14 +61,15 @@ Node* buildTree(string str) {
 
         // For the right child
         i++;
-        if (i >= ip.size()) break;
+        if (i >= ip.size())
+            break;
         currVal = ip[i];
 
         // If the right child is not null
         if (currVal != "N") {
 
             // Create the right child for the current node
-            currNode->right = newNode(stoi(currVal));
+            currNode->right = new Node(stoi(currVal));
 
             // Push it to the queue
             queue.push(currNode->right);
@@ -86,51 +82,52 @@ Node* buildTree(string str) {
 
 
 // } Driver Code Ends
-class Solution{
-    public:
-    bool isMirror(struct Node* left, struct Node* right) 
+
+class Solution {
+  public:
+    bool solve(Node* root1, Node* root2)
     {
-        if(left == NULL && right == NULL)
+        if(!root1&&!root2)
             return true;
-            
-        if(left == NULL || right == NULL)
+        if(!root1 || !root2)
             return false;
-            
-        return (left->data == right->data) && isMirror(left->left, right->right) && isMirror(left->right, right->left);
+        if(root1->data != root2->data)
+            return false;
+        return solve(root1->left,root2->right) && solve(root1->right,root2->left);
     }
-    bool isSymmetric(struct Node* root)
+    bool isSymmetric(Node* root) 
     {
-	    if(root==NULL)
-	        return true;
-        return isMirror(root->left, root->right);        
+        if(!root)
+            return true;
+        return solve(root->left,root->right);
     }
 };
+
 
 //{ Driver Code Starts.
 
 /* Driver program to test size function*/
 
-  
-
 int main() {
 
-   
     int t;
     scanf("%d ", &t);
     while (t--) {
         string s, ch;
         getline(cin, s);
-        
+
         Node* root = buildTree(s);
 
         vector<int> ans;
         Solution ob;
-        if(ob.isSymmetric(root)){
-            cout<<"True"<<endl;
+        if (ob.isSymmetric(root)) {
+            cout << "True" << endl;
+        } else {
+            cout << "False" << endl;
         }
-        else{ 
-            cout<<"False"<<endl;
-        }
+
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
