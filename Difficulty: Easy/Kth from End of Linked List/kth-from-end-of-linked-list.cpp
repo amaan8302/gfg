@@ -26,31 +26,25 @@ void printList(Node* node) {
 
 class Solution {
   public:
-    int size(Node *head)
-    {
-        Node * temp = head;
-        int cnt=1;
-        while(temp->next!=NULL)
-        {
-            cnt++;
-            temp = temp->next;
-        }
-        return cnt;
-    }
     int getKthFromLast(Node *head, int k) {
-        int s = size(head);
-        int x = s - k;
-        if(x<0 || (head->next==NULL && k!=1))
-            return -1;
-        int cnt = 0;
-        while(cnt!=x)
+        Node *fast = head;
+        Node *slow = head;
+        for(int i = 1 ; i <= k ; i++)
         {
-            cnt++;
-            head = head->next;
+            if(fast)
+                fast=fast->next;
+            else
+                return -1;
         }
-        return head->data;
+        while(fast)
+        {
+            slow = slow->next;
+            fast=fast->next;
+        }
+        return slow->data;
     }
 };
+
 
 
 //{ Driver Code Starts.
