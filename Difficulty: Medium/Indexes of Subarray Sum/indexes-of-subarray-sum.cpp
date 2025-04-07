@@ -4,25 +4,30 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
     vector<int> subarraySum(vector<int> &arr, int target) {
-        int i = 0, j = 0, sum = 0, n = arr.size();
-        while (j < n)
+        int i = 0,j=0,n=arr.size(),sum = arr[0];
+        while(j<n)
         {
-            sum += arr[j];
-            while (sum > target && i <= j) 
+            if(sum<target)
             {
-                sum -= arr[i];
+                j++;
+                sum+=arr[j];
+            }
+            else if(sum > target)
+            {
+                sum-=arr[i];
                 i++;
             }
-            if (sum == target)
-                return {i+1, j+1};
-            j++;
+            else
+                return {i+1,j+1};
         }
         return {-1};
     }
 };
+
 
 //{ Driver Code Starts.
 
