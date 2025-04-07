@@ -50,17 +50,27 @@ Node* inputList(int size, vector<int> v) {
 class Solution {
   public:
     Node* intersectPoint(Node* head1, Node* head2) {
+        if(!head1||!head2)
+            return NULL;
+        unordered_map<Node*,bool>mp;
         Node* temp1 = head1;
         Node* temp2 = head2;
-    
-        while (temp1 != temp2) {
-            temp1 = temp1 ? temp1->next : head2;
-            temp2 = temp2 ? temp2->next : head1;
+        while(temp1)
+        {
+            if(!mp[temp1])
+                mp[temp1]=true;
+            temp1=temp1->next;
         }
-    
-        return temp1;
+        while(temp2)
+        {
+            if(mp[temp2])
+                return temp2;
+            temp2=temp2->next;
+        }
+        return NULL;
     }
 };
+
 
 
 //{ Driver Code Starts.
