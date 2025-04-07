@@ -7,15 +7,21 @@ using namespace std;
 class Solution {
   public:
     void mergeArrays(vector<int>& a, vector<int>& b) {
-        int as = a.size();
-        int bs = b.size();
+        priority_queue<int , vector<int>,greater<>>pq; // min heap
+        for(int i : a)
+            pq.push(i);
         for(int i : b)
-            a.push_back(i);
-        std::sort(a.begin(),a.end());
-        b.clear();
-        for(int i = as ; i < as+bs ; i++)
-            b.push_back(a[i]);
-        a.erase(a.begin() + as, a.begin() + as + bs);
+            pq.push(i);
+        for(int i = 0 ; i < a.size() ; i++)
+        {
+            a[i]=pq.top();
+            pq.pop();
+        }
+        for(int i = 0 ; i < b.size() ; i++)
+        {
+            b[i]=pq.top();
+            pq.pop();
+        }
     }
 };
 
