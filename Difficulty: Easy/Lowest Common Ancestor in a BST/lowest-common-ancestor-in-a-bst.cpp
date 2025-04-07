@@ -16,21 +16,25 @@ class Node {
     }
 };
 
-// Function to Build Tree
-
 
 // } Driver Code Ends
+
 class Solution {
   public:
-    Node* LCA(Node* root, Node* n1, Node* n2) {
-        // code here
-        if (!root) 
-            return nullptr;
-        if (n1->data < root->data && n2->data < root->data)
-            return LCA(root->left, n1, n2);
-        if (n1->data > root->data && n2->data > root->data)
-            return LCA(root->right, n1, n2);
-        return root;
+    Node* LCA(Node* root, Node* p, Node* q) {
+        if(root==NULL)
+            return NULL;
+        if(root == p || root==q)
+            return root;
+        
+        Node* leftSide = LCA(root->left,p,q);
+        Node* rightSide = LCA(root->right,p,q); 
+        if(leftSide!=NULL && rightSide!=NULL)
+            return root;
+        if(leftSide!=NULL)
+            return leftSide;
+        else
+            return rightSide;
     }
 };
 
@@ -99,6 +103,15 @@ Node* buildTree(string str) {
     return root;
 }
 
+Node* searchOnTree(Node* root, int num) {
+    if (root == nullptr || root->data == num)
+        return root;
+    if (num < root->data)
+        return searchOnTree(root->left, num);
+    else
+        return searchOnTree(root->right, num);
+}
+
 int main() {
 
     int t;
@@ -109,15 +122,15 @@ int main() {
         getline(cin, s);
         scanf("%d ", &l);
         scanf("%d ", &h);
-        Node* n1 = new Node(l);
-        Node* n2 = new Node(h);
         Node* root = buildTree(s);
+        Node* n1 = searchOnTree(root, l);
+        Node* n2 = searchOnTree(root, h);
         Solution sol;
         int ans = sol.LCA(root, n1, n2)->data;
         cout << ans << endl;
         cout << "~"
              << "\n";
     }
-    return 1;
+    return 0;
 }
 // } Driver Code Ends
