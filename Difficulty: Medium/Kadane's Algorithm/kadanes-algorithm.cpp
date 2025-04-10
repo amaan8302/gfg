@@ -5,20 +5,23 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
-    int maxSubarraySum(vector<int> &nums) 
-    {
-        int maxSum = nums[0];
-        int currentSum = nums[0];
-        for (int i = 1; i < nums.size(); ++i) 
+    int maxSubarraySum(vector<int> &arr) {
+        int maxi = arr[0];
+        int sum = 0;
+        for(int i : arr)
         {
-            currentSum = std::max(nums[i], currentSum + nums[i]);
-            maxSum = std::max(maxSum, currentSum);
+            sum+=i;
+            maxi = max(maxi,sum);
+            if(sum<0)
+                sum=0;
         }
-        return maxSum;
+        return maxi;
     }
 };
+
 
 //{ Driver Code Starts.
 
