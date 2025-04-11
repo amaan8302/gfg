@@ -4,6 +4,7 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
     void dfs(vector<vector<int>>& image,int color, int i, int j, int original)
@@ -26,8 +27,8 @@ class Solution {
     }
 };
 
-//{ Driver Code Starts.
 
+//{ Driver Code Starts.
 int main() {
     int tc;
     cin >> tc;
@@ -48,6 +49,9 @@ int main() {
                 cout << j << " ";
             cout << "\n";
         }
+
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
