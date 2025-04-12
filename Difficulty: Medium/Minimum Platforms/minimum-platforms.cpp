@@ -6,14 +6,16 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int findPlatform(vector<int>& arr, vector<int>& dep) 
+    typedef pair<int,int>p;
+    int findPlatform(vector<int>& start, vector<int>& finish) 
     {
-        std::sort(arr.begin(),arr.end());
-        std::sort(dep.begin(),dep.end());
-        int i = 0, j = 0,cnt = 0 , maxi = INT_MIN;
-        while(i<arr.size() && j<arr.size())
+        std::sort(start.begin(),start.end());
+        std::sort(finish.begin(),finish.end());
+        int n = start.size(), i = 0, j = 0,maxi=INT_MIN;
+        int cnt = 0;
+        while(i < n && j < n)
         {
-            if(arr[i]<=dep[j])
+            if(start[i]<=finish[j])
             {
                 cnt++;
                 i++;
