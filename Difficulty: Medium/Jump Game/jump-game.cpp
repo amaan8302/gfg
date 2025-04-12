@@ -1,49 +1,63 @@
 //{ Driver Code Starts
-//Initial Template for C++
+// Initial Template for C++
 
 #include <bits/stdc++.h>
 using namespace std;
 
+
 // } Driver Code Ends
-//User function Template for C++
 
 class Solution {
   public:
-    int canReach(int A[], int N) {
-    int maxReach = 0; // Tracks the farthest index we can reach
-
-    for (int i = 0; i < N; i++) {
-        if (i > maxReach) {
-            return 0; // If current index is beyond the farthest reachable point
+    bool canJumpFrom(int index, vector<int>& nums, vector<int>& dp) 
+    {
+        if (index >= nums.size() - 1) return true;
+        if (dp[index] != -1) return dp[index];
+    
+        int maxJump = nums[index];
+        for (int jump = 1; jump <= maxJump; jump++) {
+            if (canJumpFrom(index + jump, nums, dp)) {
+                return dp[index] = true;
+            }
         }
-        maxReach = std::max(maxReach, i + A[i]); // Update maxReach
-        if (maxReach >= N - 1) {
-            return 1; // If we can reach or exceed the last index
-        }
+        return dp[index] = false;
     }
-    return 0;
-}
-
+    bool canReach(vector<int> &nums) {
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        return canJumpFrom(0, nums, dp);
+    }
 };
 
+
 //{ Driver Code Starts.
+
 int main() {
+
     int t;
     cin >> t;
+    cin.ignore();
     while (t--) {
-        int N;
-        cin>>N;
-        
-        int A[N];
-        
-        for(int i=0; i<N; i++)
-            cin>>A[i];
 
+        vector<int> a;
+        string input;
+        int num;
+
+        getline(cin, input);
+        stringstream s2(input);
+        while (s2 >> num) {
+            a.push_back(num);
+        }
         Solution ob;
-        cout << ob.canReach(A,N) << endl;
-    
-cout << "~" << "\n";
-}
+        int ans = ob.canReach(a);
+
+        if (ans) {
+            cout << "true" << endl;
+        } else {
+            cout << "false" << endl;
+        }
+        cout << "~" << endl;
+    }
     return 0;
 }
 // } Driver Code Ends
