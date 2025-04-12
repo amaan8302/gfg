@@ -5,27 +5,29 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 // User function Template for C++
 class Solution {
   public:
-    int solve(vector<int>& nums, int i, int maxProd, int minProd, int& result) 
-    {
-        int n = nums.size();
-        if (i >= n)
-            return result;
-        
-        int tempMax = max({nums[i], maxProd * nums[i], minProd * nums[i]});
-        int tempMin = min({nums[i], maxProd * nums[i], minProd * nums[i]});
-        
-        result = max(result, tempMax);
-        
-        return solve(nums, i + 1, tempMax, tempMin, result);
-    }
-    int maxProduct(vector<int> &nums) {
-        int result = nums[0];
-        return solve(nums, 1, nums[0], nums[0], result);
+    int maxProduct(vector<int> &arr) {
+        int prefix = 1, suffix = 1, n = arr.size();
+        int i = 0 , j = n-1,maxi = INT_MIN;
+        while(i<n && j >=0)
+        {
+            prefix *= arr[i];
+            suffix *= arr[j];
+            maxi = max({maxi,prefix,suffix});
+            if(arr[i]==0)
+                prefix = 1;
+            if(arr[j]==0)
+                suffix=1;
+            i++;
+            j--;
+        }
+        return maxi;
     }
 };
+
 
 //{ Driver Code Starts.
 
