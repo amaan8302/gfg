@@ -11,16 +11,32 @@ using namespace std;
 
 class Solution {
   public:
-    int majorityElement(vector<int>& arr) {
-        unordered_map<int,int>mp;
-        int ans = -1;
-        for(int i : arr)
+    int majorityElement(vector<int>& nums) {
+        int count = 0;
+        int candidate = 0;
+        for (int num : nums) 
         {
-            mp[i]++;
-            if(mp[i]>arr.size()/2)
-                ans = i;
+            if (count == 0) 
+            {
+                candidate = num;
+                count = 1;
+            } 
+            else 
+            {
+                if (num == candidate)
+                    count++;
+                else
+                    count--;
+            }
         }
-        return ans;
+        count = 0;
+        for (int num : nums) 
+        {
+            if (num == candidate) count++;
+        }
+    
+        if (count > nums.size() / 2) return candidate;
+        else return -1;
     }
 };
 
