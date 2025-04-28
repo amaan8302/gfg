@@ -101,25 +101,20 @@ struct Node
 
 class Solution {
   public:
-    // Function to return the maximum sum of non-adjacent nodes.
-    pair<int, int> getMaxSumHelper(Node* root) 
+    typedef pair<int,int>p;
+    p solve(Node* root)
     {
-        if (!root) {
-            return {0, 0};
-        }
-        
-        pair<int, int> left = getMaxSumHelper(root->left);
-        pair<int, int> right = getMaxSumHelper(root->right);
-        
-        int incl = root->data + left.second + right.second;
-        int excl = max(left.first, left.second) + max(right.first, right.second);
-        
-        return {incl, excl};
+        if(!root)   return {0,0};
+        p l = solve(root->left);
+        p r = solve(root->right);
+        int incl = root->data + l.second + r.second;
+        int excl = max(l.first,l.second) + max(r.first,r.second);
+        return {incl,excl};
     }
     int getMaxSum(Node *root) {
         // code here
-        pair<int, int> result = getMaxSumHelper(root);
-    return max(result.first, result.second);   
+        p ans = solve(root);
+        return max(ans.first,ans.second);
     }
 };
 
