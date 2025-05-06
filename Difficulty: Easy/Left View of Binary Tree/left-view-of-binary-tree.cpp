@@ -11,21 +11,6 @@ struct Node {
 
 
 // } Driver Code Ends
-/* A binary tree node
-
-struct Node
-{
-    int data;
-    struct Node* left;
-    struct Node* right;
-
-    Node(int x){
-        data = x;
-        left = right = NULL;
-    }
-};
- */
-
 class Solution {
   public:
     vector<int> leftView(Node *root) {
@@ -64,6 +49,7 @@ class Solution {
         return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 
