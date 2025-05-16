@@ -4,21 +4,27 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 // User function template for C++
 class Solution {
   public:
     bool twoSum(vector<int>& arr, int target) {
-        unordered_map<int, int> hashMap; // To store element and its index
-    for (int i = 0; i < arr.size(); i++) {
-        int complement = target - arr[i];
-        if (hashMap.find(complement) != hashMap.end() && hashMap[complement] != i) {
-            return true;
+        std::sort(arr.begin(),arr.end());
+        int n = arr.size();
+        int i = 0 , j = n-1;
+        while(i<j)
+        {
+            if(arr[i]+arr[j]<target)
+                i++;
+            else if(arr[i]+arr[j]>target)
+                j--;
+            else
+                return true;
         }
-        hashMap[arr[i]] = i;
-    }
-    return false;
+        return false;
     }
 };
+
 
 //{ Driver Code Starts.
 
