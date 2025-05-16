@@ -4,21 +4,22 @@ using namespace std;
 
 
 // } Driver Code Ends
+
 class Solution {
   public:
     vector<int> kLargest(vector<int>& arr, int k) {
-        priority_queue<int>pq;
-        for(int i : arr)
-            pq.push(i);
-        vector<int>ans(k,0);
-        for(int i =0 ; i < k ; i++)
+        // Your code here
+        priority_queue<int>pq(arr.begin(),arr.end());
+        vector<int>ans;
+        while(k--)
         {
-            ans[i]=pq.top();
+            ans.push_back(pq.top());
             pq.pop();
         }
         return ans;
     }
 };
+
 
 //{ Driver Code Starts.
 int main() {
