@@ -24,22 +24,33 @@ void printList(Node* node) {
 
 // } Driver Code Ends
 
+/* struct Node {
+  int data;
+  struct Node *next;
+  Node(int x) {
+    data = x;
+    next = NULL;
+  }
+};*/
+
+// Function to find the data of kth node from the end of a linked list.
 class Solution {
   public:
     int getKthFromLast(Node *head, int k) {
-        Node *fast = head;
-        Node *slow = head;
-        for(int i = 1 ; i <= k ; i++)
+        int j = 0;
+        Node*temp = head;
+        while(j!=k-1)
         {
-            if(fast)
-                fast=fast->next;
-            else
+            if(temp->next==NULL)
                 return -1;
+            temp = temp->next;
+            j++;
         }
-        while(fast)
+        Node*slow = head;
+        while(temp->next!=NULL)
         {
             slow = slow->next;
-            fast=fast->next;
+            temp = temp->next;
         }
         return slow->data;
     }
