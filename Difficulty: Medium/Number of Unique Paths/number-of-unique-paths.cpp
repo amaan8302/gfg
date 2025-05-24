@@ -2,20 +2,21 @@
 
 class Solution {
   public:
-    int solve(int a , int b , int i , int j,vector<vector<int>>&dp)
+    int NumberOfPath(int a, int b) 
     {
-        if(i>=a || j>=b)
-            return 0;
-        if(i == a-1 && j == b-1)
-            return 1;
-        if(dp[i][j]!=-1)
-            return dp[i][j];
-        int down = solve(a,b,i+1,j,dp);
-        int right = solve(a,b,i,j+1,dp);
-        return dp[i][j] = down + right;
-    }
-    int NumberOfPath(int a, int b) {
-        vector<vector<int>>dp(a+1,vector<int>(b+1,-1));
-        return solve(a,b,0,0,dp);
+        vector<vector<int>>dp(a+1,vector<int>(b+1,0));
+        dp[a-1][b-1]=1;
+        for(int i = a-1 ; i >= 0 ; i--)
+        {
+            for(int j = b-1 ; j >= 0 ; j--)
+            {
+                if (i == a - 1 && j == b - 1) 
+                    continue;
+                int down = dp[i+1][j];
+                int right = dp[i][j+1];
+                dp[i][j] = down + right;
+            }
+        }
+        return dp[0][0];
     }
 };
