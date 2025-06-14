@@ -3,8 +3,12 @@ class Solution {
     bool solve(vector<int>& arr, int k, int mid) 
     {
         int t = 0;
-        for(int i = 0; i < arr.size(); i++) 
-            t += (arr[i] + mid - 1) / mid;
+        for(int i : arr)
+        {
+            t+=i/mid;
+            if(i%mid!=0)
+                t++;
+        }
         return t <= k;
     }
     int kokoEat(vector<int>& arr, int k) {
