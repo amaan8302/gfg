@@ -80,24 +80,18 @@ Node* buildTree(string str) {
 
 
 // } Driver Code Ends
-
-
 class Solution {
   public:
-    void inorder(Node *root , vector<int>&v)
-    {
-        if(root==NULL)
-            return;
-        inorder(root->left,v);
-        v.push_back(root->data);
-        inorder(root->right,v);
-    }
+    int cnt = 0,ans = -1;
     int kthSmallest(Node *root, int k) {
-        vector<int>arr;
-        inorder(root,arr);
-        if(k-1>=arr.size())
+        if(!root)
             return -1;
-        return arr[k-1];
+        kthSmallest(root->left,k);
+        cnt++;
+        if(cnt==k)
+            ans = root->data;
+        kthSmallest(root->right,k);
+        return ans;
     }
 };
 
