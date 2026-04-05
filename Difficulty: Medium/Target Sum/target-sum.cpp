@@ -1,61 +1,16 @@
-//{ Driver Code Starts
-// Initial Template for C++
-
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
-//Back-end complete function Template for C++
-
 class Solution {
   public:
-    const int mod = 1e9 + 7;
-    long long solve(vector<int>& nums, int target, int index, int sum, vector<vector<int>>& dp) 
-    {
-        if (index == nums.size()) 
-        {
-            if (target == sum)
-                return 1;
-            else 
-                return 0;
+    int totalWays(vector<int>& arr, int target) {
+        int sum = 0;
+        for (int x : arr) sum += x;
+        if ((sum + target) % 2 || abs(target) > sum) return 0;
+        int s = (sum + target) / 2;
+        vector<int> dp(s + 1, 0);
+        dp[0] = 1;
+        for (int x : arr) {
+            for (int j = s; j >= x; j--)
+                dp[j] += dp[j - x];
         }
-        // if (dp[index][sum] != -1)
-        //     return dp[index][sum];
-        int plus = solve(nums, target, index + 1, sum + nums[index], dp);
-        int minus = solve(nums, target, index + 1, sum - nums[index], dp);
-        return (plus + minus)%mod;
-    }
-    long long findTargetSumWays(int n, vector<int>& A, int target) {
-        // Your code here
-        vector<vector<int>>dp;
-        return solve(A,target,0,0,dp);
+        return dp[s];
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int N;
-
-        cin >> N;
-        vector<int> arr(N);
-
-        for (int i = 0; i < N; i++) {
-            cin >> arr[i];
-        }
-        int target;
-        cin >> target;
-
-        Solution ob;
-        cout << ob.findTargetSumWays(N, arr, target);
-        cout << "\n";
-    
-cout << "~" << "\n";
-}
-    return 0;
-}
-// } Driver Code Ends
